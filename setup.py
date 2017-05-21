@@ -16,7 +16,7 @@ setup(name = "pycyborg",
     long_description = """AMBX Cyborg Gaming Lights Library""" ,
     data_files=[
                 ('/etc/udev/rules.d',['doc/80-cyborg.rules']),
-                ],
+                ] if sys.platform != 'win32' else [],
       
       classifiers=[
           'Development Status :: 4 - Beta',
