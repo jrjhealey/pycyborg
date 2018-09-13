@@ -118,3 +118,71 @@ there is also a simple wizard that can automatically generate a config file. thi
 
     python boblight.py --makeconfig
  
+
+## Other useful/interesting resources
+http://projects.stephenklancher.com/project/id/89/amBX_Usability_Enhancements
+
+## sprint113's Reddit instructions for PyCyborg
+1. Install Python
+
+2 Download and extract the pycyborg files.
+
+3. Install the AMBX cyborg lights w/libusb-win32 drivers. Download Zadig and open it. Options -> List all devices. Then from the main dropdown menu, I found the Cyborg lights, and to the right of the green arrow, I selected libusb-win32 and installed that driver.
+
+4. Install pyusb. This is done by opening a command prompt and entering
+
+    pip install pyusb
+
+5. Test if the lights work, in a command prompt, change directory to where you extracted the pycyborg files and enter the line
+
+    python setup.py install
+
+Some text will show up. Keep an eye out for any error messages. Next run the command:
+
+    python identify.py
+
+This runs the identification script. Your connected light(s) will one by one cycle through some colors. Some text will be shown, and you will likely see a light with Location: [None]. This is good because this is the problem we expect to encounter.
+
+We now need to manually change the location. I ended up doing a hack job of a modification to one of the existing scripts in the folder. In a text editor (IDLE will be installed by default), open the setcolor.py file. Save it as a new file, e.g. setlocation.py.
+
+At the end of the file, you will have the lines of code:
+
+    for cy in cyborgs:
+    if options.verbose:
+        print("Changing : %s"%cy)
+    if options.intensity!=None:
+        cy.set_intensity(options.intensity)
+    cy.set_rgb_color(r,g,b,force=True)
+
+which I changed to:
+
+    for cy in cyborgs:
+    if options.verbose:
+        print("Changing : %s"%cy)
+    cy.set_position("N")
+    cy.set_intensity(100)
+
+**NB** I've written my own slightly less hacky version of this which is in the repo as `resetlights.py`. It now includes an option to specify a location, and so it may be invoked as:
+
+    python resetlights.py -n <lightnumber> -i <intensity> -l <location> 255 255 255
+
+>If you know which position you want the light to be, use that instead of cy.set_position. Valid entries are N, NE, NW, E, W, SE, SW, S, CENTER (case sensitive). You may want to change the intensity value if you normally use something that isn't 100. Save the file.
+
+>In the command prompt, run
+
+   python setlocation.py 255 255 255
+
+>or whatever new file name you used. In this case, I was lazy and didn't change anything else, so the script is still expecting 3 numbers, but won't do anything with them. This should write the location you specified to the light.
+
+>Now if you either go back to your computer with the ambx lights, or uninstall the libusb-32 drivers and reinstall the cyborg drivers, you the lights should now show up in the ambx control panel.
+
+
+## How to revert from `libusb` to MadCatz drivers (since Zadig can't do it)
+
+1. Find the 2 light devices in device manager (it might be easier to switch the default View to `by connection` rather than `by type`).
+
+2. Click on the device and `Update Driver` -> `Browse my computer...` ->  `Let me pick from a list...` -> `USB Input Device` (or similar `HID`)
+
+3. They should revert to using the correct drivers now (and will no longer be visible to `pycyborg`.
+
+
