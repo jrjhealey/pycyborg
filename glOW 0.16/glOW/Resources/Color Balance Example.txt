@@ -1,0 +1,75 @@
+// These are my balance settings. Mainly here for me, but if you 
+// wanna give em a shot go ahead. And yes, my blues really are that 
+// strong
+
+Light0
+{
+	ColorR = 1.0;
+	ColorG = 1.0;
+	ColorB = 0.3;
+	Enabled = true;
+}
+
+Light1
+{
+	ColorR = 1.0;
+	ColorG = 1.0;
+	ColorB = 0.4;
+	Enabled = true;
+}
+
+Light2
+{
+	ColorR = 0.9;
+	ColorG = 1.0;
+	ColorB = 0.4;
+	Enabled = true;
+}
+
+Light3
+{
+	ColorR = 1.0;
+	ColorG = 1.0;
+	ColorB = 0.45;
+	Enabled = true;
+}
+
+Light4
+{
+	ColorR = 1.0;
+	ColorG = 1.0;
+	ColorB = 1.0;
+	Enabled = false;
+}
+
+Light5
+{
+	ColorR = 1.0;
+	ColorG = 0.80;
+	ColorB = 0.50;
+	Enabled = true;
+}
+
+Light6
+{
+	ColorR = 1.0;
+	ColorG = 1.0;
+	ColorB = 1.0;
+	Enabled = false;
+}
+
+Light7
+{
+	ColorR = 1.0;
+	ColorG = 1.0;
+	ColorB = 1.0;
+	Enabled = false;
+}
+
+Light8
+{
+	ColorR = 1.0;
+	ColorG = 1.0;
+	ColorB = 1.0;
+	Enabled = false;
+}

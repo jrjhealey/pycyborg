@@ -1,0 +1,38 @@
+0.1
+First Release
+
+0.11
+Fixed mistake in update timing
+
+0.12
+Made lights change more smoothly
+
+0.13
+Changed screen grab method. Now using about 10x less memory, and only doing one transfer from graphics memory to system memory (a slow process). 
+
+Non-debug version should no longer require DirectX.
+
+Improved screen color averaging, should help for anything with letterboxing.
+
+0.14
+Fixed some slightly off color settings.
+
+Added a test for fans, figured out how I'd make the interface control the exe.
+
+Check that glOW isn't already running at start up. If you try to start one using the interface, it will instead hook onto the already existing instance of glOW.
+
+0.15
+Started working on the interface. Added fan and rumble control to it, aswell as starting a color balance interface (currently unavailable).
+
+Added the ability to select which areas of the screen to average.
+
+No longer figuring out every light value at once, split it up into jobs and scheduled them.
+
+Also, added the ability to disable the lights, you'd think it wouldn't make a difference but it tells my program doesn't bother figuring out the light values for those.
+
+0.16
+No big changes, just some performance updates, the program still causes stuttering in a lot of games, but outside of games, I can actually run with a frequency of 0 (it'll go as fast as it can) and CPU usage doesn't go above 2%. 
+
+For those curious, the stutter occurs because the screen image needs to be locked when I copy it, which means other stuff can't use it. In most cases this is fine, but with games, it can cause problems. The stutter issue probably won't ever go away, but I'll keep trying to think of optimisations. Annoyingly, I'm fairly certain that I'll be able to fix the stutter issue for Windows 8 (I'll probably release a version for that in March-ish as long as the amBX drivers are working), but it won't be able to be ported to Windows 7 or earlier.
+
+Note: I wouldn't suggest setting a frequency of 0, the amBX won't have time to fade from one color to another and it'll look nasty, if you've got a beefy PC, try a freq of 100, it looks nice... oh, and if you do that, look for a video on Youtube called "Saints Row: The Third - Professor Genki Trailer", it looks insane (seizure warning, seriously).
