@@ -190,3 +190,44 @@ which I changed to:
 Also included in the repo is Matt Callaghan's excellent glOW tool, which can essentially replace all the amBX suite. I'm adding it here (if he has no objections), for posterity.
 
 http://mattcallaghan.blogspot.com/2016/01/ambx-glow.html
+
+
+# How to alter the registry power-off status (prevents lights from flickering/cutting out)
+
+Modified with my own observations from Stere0man's Reddit Instructions (https://www.reddit.com/r/ambx/comments/4ebmbg/cyborg_lights_windows_10/):
+
+First you need to download the drivers from the madcatz site here http://madcatz.com/downloads/
+
+the drivers are listed under windows 7/8 drivers, there are currently no official windows 10 drivers so just download the x86 or x64 windows 7/8 drivers depending on your OS, (for windows 10 64 get the x64 version and for windows 10 32 get the x86 version)
+
+Once downloaded extract and install the drivers by running Cyborg_amBX_LightPod_SD7_00000025_64_Full_pfw.exe
+
+this will install both the drivers and the Ambx software, once they are installed run ambx control panel and check for updates, you may have to check a few times until its fully updated.
+
+once updated reboot the computer, on reboot the lights will not work, they come on for a second then switch off, this is where it gets tricky:
+
+1. Open up Device Manager. Once in, locate the cyborg lights under Human Interface Devices, right click `Cyborg amBX Gaming Light (HID)` and select properties, this will open a properties window, from there select `Details` and from the drop down menu select `Hardware Ids`. Note down the Hardware ID's for all the lights you have.
+
+They look something like:
+HID\VID_06A3&PID_0DC5&REV_0110
+
+2. Open the Windows Registry Editor (`Win + R` followed by typing `regedit` will suffice). You can search for the hardware IDs, but it took me to the wrong part of the registry. Ensure that you end up in a path that looks like this:
+
+        HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\USB\VID_06A3&PID_0DC5\6&10488bfd&0&1\Device Parameters
+                                                                   ^ This should match each light hardware ID
+
+3. Click on Device Parameters and in the right window pane you should see 3 Dword strings
+
+        AllowIdleIrpInD3
+
+        DeviceSelectiveSuspended
+
+        EnhancedPowerManagementEnabled
+
+##### *Disable* all of these by editing its hexadecimal value from 1 to 0 and save the changes.
+
+4. Rinse and repeat the above steps for all the lights (they should be listed under one another, but double check your hardware IDs to be safe, its easy to break things when messing about in the registry).
+
+5. Reboot the computer and the lights should now stay illuminated (this can be tested with amBX Illuminate, or glOW).
+
+If they are still not working you may need to go into device manager again and click Universal Serial Bus Controllers and open properties on each USB Root hub and select Power Management and make sure there's no ticks in Allow the computer to turn off this device to save power.
